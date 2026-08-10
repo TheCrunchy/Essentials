@@ -68,7 +68,11 @@ namespace Essentials
             {
                 _commandtimeout.Add(steamid, DateTime.Now);
             }
-
+            if (Context.Player?.Controller.ControlledEntity is MyCockpit controller)
+            {
+                controller.Use();
+                Context.Respond($"Player '{Context.Player.DisplayName}' ejected.");
+            }
             var playerEndpoint = new Endpoint(Context.Player.SteamUserId, 0);
             var replicationServer = (MyReplicationServer)MyMultiplayer.ReplicationLayer;
             var clientDataDict = _clientStates.Invoke(replicationServer);
